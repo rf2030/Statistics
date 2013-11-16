@@ -1,5 +1,43 @@
 # History files
 .Rhistory
 
-# Example code in package build process
-*-Ex.R
+#Required Libaraies:
+library(leaps) 
+library(zoo) 
+library(quadprog) 
+library(tseries) 
+library(MASS) 
+library(mgcv) 
+library(fCalendar) 
+library(fEcofin) 
+library(fBasics) 
+library(fSeries) 
+library(nlme) 
+library(stats4) 
+library(forecast)
+
+#######Clean data for 30yr#######
+clean=read.table("/Users/reginaflores/Documents/School/Spring_08/AdvancedDataAnalysis/the sis/data/Factor30yr.txt",header=T)
+55
+attach(clean)
+clean30yr=Composite+Factor
+as.matrix(clean30yr)
+######################## 
+alldata=read.table("/Users/reginaflores/Documents/School/Spring_08/AdvancedDataAnalysis/t hesis/data/allData.txt",header=T)
+attach(alldata) subset<-alldata[1104:1645,]
+attach(subset)
+
+#Fit all 8 variables
+######################################## 
+##########ERROR FITTING PROCEDURE####### 
+########################################
+
+#STEP 1 - PLOT LINEAR RELATIONSHIP
+#plot(Tres10yr, SwapTres10yr,xlab="10 year Treasury Rate",ylab="10 year Swap Rate",main="10 Year Swaps vs Treasury Rates")
+#abline(lm(SwapTres10yr ~ Tres10yr),col=2) 
+pairs(cbind(S10yr,FFO,Baa,T10yr,S1yr,S2yr,S3yr,S4yr,S5yr))
+
+#STEP 2 - LINEAR REGRESSION/CHECK CORRELATED ERRORS
+linreg<-lm(S10yr~FFO+Baa+T10yr+S1yr+S2yr+S3yr+S4yr+S5yr) 
+linreg_res=resid(linreg)
+ts.plot(linreg_res, main="Residuals", ylab="")
